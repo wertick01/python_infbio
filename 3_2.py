@@ -2,6 +2,8 @@ from dis import findlabels
 import random
 from random import randrange
 
+print('\n#3.2')
+
 def Printer(dct) -> dict:
     for key, value in dct.items():
         print(key)

@@ -1,10 +1,24 @@
+print('\n#3.1')
 
 dna_sec = input('Input the DNA Sequence: ')
+
+def FindStartPosition(seq):
+    return seq.find('ATG')
+
 
 def DnaToProtein(dna):
     dna = dna.upper()
 
-    print('DNA Sequence: ', dna)
+    dna = [dna, dna[1:], dna[2:]]
+
+    for seq in dna:
+        start = FindStartPosition(seq)
+        if start != -1:
+            seq = seq[start:]
+
+    print(dna[0])
+    print('-', dna[1], sep = '')
+    print('--', dna[2], sep = '')
 
     protein = {
             "TTT" : "F", "CTT" : "L", "ATT" : "I", "GTT" : "V",
@@ -25,14 +39,16 @@ def DnaToProtein(dna):
             "TGG" : "W", "CGG" : "R", "AGG" : "R", "GGG" : "G" 
             }
 
-    protein_sequence = ''
+    index = 0
+    for seq in dna:
+        protein_sequence = ''
+        for i in range(0, len(seq)-(index+len(seq)%3), 3):
+            if protein[seq[i:i+3]] == 'STOP' :
+                break
+            protein_sequence += protein[seq[i:i+3]]
 
-    for i in range(0, len(dna)-(3+len(dna)%3), 3):
-        if protein[dna[i:i+3]] == 'STOP' :
-            break
-        protein_sequence += protein[dna[i:i+3]]
-
-    print('Protein Sequence: ', protein_sequence)
+        print(f'Protein Sequence [ramk +{index}]: ', protein_sequence)
+        index += 1
     return
 
 DnaToProtein(dna_sec)
